@@ -1,10 +1,11 @@
 import cv2
 import mediapipe as mp
 
+
 class HandDetector:
     #constructor
     def __init__(self, max_hands = 2, detection_confidence=0.7, tracking_confidence=0.7):
-        self.mp_hands = mp.solution.hands
+        self.mp_hands = mp.solutions.hands
         self.mp_draw = mp.solutions.drawing_utils
 
         self.hands = self.mp_hands.Hands(
@@ -29,6 +30,8 @@ class HandDetector:
         
         height, width, channels = frame.shape
 
+        if results.multi_hand_landmarks is None:
+            return detected_hands
         for i, hand_landmarks in enumerate(results.multi_hand_landmarks):
             landmarks = []
 
