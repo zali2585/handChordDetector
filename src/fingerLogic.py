@@ -23,8 +23,8 @@ returns dict
     "thumb": True,...etc
 
 """
+fingers = {}
 def fingers_up(landmarks, handedness):
-    fingers = {}
     for finger, tip_id in FINGER_TIPS.items():
         #skip thumb bc it goes sideways
         if finger == "thumb":
@@ -40,4 +40,21 @@ def fingers_up(landmarks, handedness):
             fingers["thumb"] = thumb_tip_x > thumb_mid_x
         else:
             fingers["thumb"] = thumb_tip_x < thumb_mid_x
+    return fingers
+
+def count_fingers(landmarks):
+    fingers = []
+
+    # Index
+    fingers.append(landmarks[8][1] < landmarks[6][1])
+
+    # Middle
+    fingers.append(landmarks[12][1] < landmarks[10][1])
+
+    # Ring
+    fingers.append(landmarks[16][1] < landmarks[14][1])
+
+    # Pinky
+    fingers.append(landmarks[20][1] < landmarks[18][1])
+
     return fingers
